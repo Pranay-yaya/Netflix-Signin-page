@@ -173,3 +173,69 @@
     </LinearLayout>
 
 </ScrollView>
+
+
+
+    # Mainactivity
+    package com.example.netflix
+// Updated to match your project package from error logs
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var etEmail: TextInputEditText
+    private lateinit var etPassword: TextInputEditText
+    private lateinit var cbRememberMe: CheckBox
+    private lateinit var btnSignIn: Button
+    private lateinit var tvDisplay: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Initialize views (linked to latest XML IDs)
+        etEmail = findViewById(R.id.et_email)
+        etPassword = findViewById(R.id.et_password)
+        cbRememberMe = findViewById(R.id.cb_remember_me)  // New: Initialize Checkbox
+        btnSignIn = findViewById(R.id.btn_sign_in)
+        tvDisplay = findViewById(R.id.tv_display)
+
+        // Pre-fill EditTexts as per requirement (using placeholders; replace with actual name/reg no)
+        etEmail.setText("Your Name")
+        etPassword.setText("Registration Number")
+
+        // Optional: Checkbox listener (e.g., toggle for demo; no specific requirement, but links UI)
+        cbRememberMe.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Toast.makeText(this, "Remember me enabled!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Remember me disabled.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Button click listener (enhanced to include checkbox state in display)
+        btnSignIn.setOnClickListener {
+            val username = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+            val rememberMe = cbRememberMe.isChecked
+
+            if (username.isNotEmpty() && password.isNotEmpty()) {
+                val displayText = "Entered Username: $username\nEntered Password: $password\nRemember Me: ${if (rememberMe) "Yes" else "No"}"
+                tvDisplay.text = displayText
+                tvDisplay.visibility = TextView.VISIBLE
+
+                // Optional: Show a toast for confirmation
+                Toast.makeText(this, "Login details displayed!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
